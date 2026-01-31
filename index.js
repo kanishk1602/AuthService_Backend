@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
+const { Kafka } = require("kafkajs");
 const app = express();
 
 //config load
@@ -95,6 +96,12 @@ dbConnect.connect()
     console.error("DB connection failed:", err);
     process.exit(1);
   });
+
+// Kafka configuration
+const kafka = new Kafka({
+  clientId: "auth-service",
+  brokers: ["0.tcp.in.ngrok.io:19532"], // ngrok public broker address
+});
 
 //ab routes define karenge
 // route kaha se ho raha ?
