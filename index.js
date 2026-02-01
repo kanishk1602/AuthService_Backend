@@ -13,19 +13,22 @@ const PORT = process.env.PORT || 4000; // port ki value nikalo env se, default p
 app.use(express.json());
 
 // CORS middleware to allow frontend origin
-// Read allowed origins from env (comma-separated), with sensible defaults for dev
 const allowedOrigins = (process.env.CORS_ORIGINS ||
   "https://microservices-ecom.vercel.app,http://localhost:3000,http://localhost:3001")
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+// Explicitly handle preflight requests for all routes
+app.options("*", cors(corsOptions));
 
 // Session middleware
 app.use(
