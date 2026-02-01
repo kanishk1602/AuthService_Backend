@@ -15,7 +15,7 @@ app.use(express.json());
 // CORS middleware to allow frontend origin
 // Read allowed origins from env (comma-separated), with sensible defaults for dev
 const allowedOrigins = (process.env.CORS_ORIGINS ||
-  "http://localhost:3000,http://localhost:3001")
+  "https://microservices-ecom.vercel.app,http://localhost:3000,http://localhost:3001")
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
